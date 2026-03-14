@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<div class="dashboard-container">
+
+    <div class="card">
+        <h3>Total Customers</h3>
+        <p>{{ total_customers }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Active Customers</h3>
+        <p>{{ active_customers }}</p>
+    </div>
+
+    <div class="card">
+        <h3>New Customers (30 days)</h3>
+        <p>{{ new_customers }}</p>
+    </div>
+
+</div>
+
+<h3>Customer Analytics</h3>
+<canvas id="customerChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('customerChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Total', 'Active', 'New'],
+        datasets: [{
+            label: 'Customers',
+            data: [
+                {{ total_customers }},
+                {{ active_customers }},
+                {{ new_customers }}
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}
